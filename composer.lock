@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a2698a7e831804cae9433c325d33344",
-    "content-hash": "bf77ea2e75c7a7b7f2114afc96a876e0",
+    "hash": "b139c339933d7b0ca4b8ae3e87903381",
+    "content-hash": "02b989346a64a767f3488b8aee3f32c8",
     "packages": [
         {
             "name": "composer/installers",
@@ -211,29 +211,29 @@
         },
         {
             "name": "yoast/license-manager",
-            "version": "1.2",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yoast/License-Manager.git",
-                "reference": "8caf52202bf51011686e31c9a43b18731047f1be"
+                "reference": "05702c2680d4a0d4d29a5efe787b8c00f2747672"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast/License-Manager/zipball/8caf52202bf51011686e31c9a43b18731047f1be",
-                "reference": "8caf52202bf51011686e31c9a43b18731047f1be",
+                "url": "https://api.github.com/repos/Yoast/License-Manager/zipball/05702c2680d4a0d4d29a5efe787b8c00f2747672",
+                "reference": "05702c2680d4a0d4d29a5efe787b8c00f2747672",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "class-api-request.php",
-                    "class-license-manager.php",
-                    "class-plugin-license-manager.php",
-                    "class-plugin-update-manager.php",
-                    "class-product.php",
-                    "class-theme-license-manager.php",
-                    "class-theme-update-manager.php",
-                    "class-update-manager.php"
+                    "class-api-request-v2.php",
+                    "class-license-manager-v2.php",
+                    "class-plugin-license-manager-v2.php",
+                    "class-plugin-update-manager-v2.php",
+                    "class-product-v2.php",
+                    "class-theme-license-manager-v2.php",
+                    "class-theme-update-manager-v2.php",
+                    "class-update-manager-v2.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -252,7 +252,7 @@
             "keywords": [
                 "wordpress"
             ],
-            "time": "2015-03-16 11:51:33"
+            "time": "2016-06-08 12:41:43"
         }
     ],
     "packages-dev": [
