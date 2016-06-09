@@ -251,6 +251,11 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 	 */
 	PostScraper.prototype.saveScores = function( score ) {
 		var indicator = getIndicatorForScore( score );
+		var focusInputVisible  = $( '#yoast_wpseo_focuskw_text_input' ).is( ':visible' );
+
+		if( !focusInputVisible ){
+			currentKeyword = tabManager.getKeywordTab().getKeyword();
+		}
 
 		if ( currentKeyword === '' ) {
 			indicator.className = 'na';
@@ -260,25 +265,20 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 		if ( tabManager.isMainKeyword( currentKeyword ) ) {
 			document.getElementById( 'yoast_wpseo_linkdex' ).value = score;
 
-			console.log(currentKeyword);
+			tabManager.updateKeywordTab( score, currentKeyword );
 			publishBox.updateScore( 'keyword', indicator.className );
 			updateTrafficLight( indicator );
 			updateAdminBar( indicator );
-
-			tabManager.updateKeywordTab( score, currentKeyword );
 		}
 
 		// If multi keyword isn't available we need to update the first tab (content)
 		if ( ! YoastSEO.multiKeyword ) {
+//			tabManager.mainKeywordTab.keyword = currentKeyword;
 			tabManager.updateKeywordTab( score, currentKeyword );
-			publishBox.updateScore( 'keyword', indicator.className );
-			updateTrafficLight( indicator );
-			updateAdminBar( indicator );
+
 			// Updates the input with the currentKeyword value
 			$( '#yoast_wpseo_focuskw' ).val( currentKeyword );
-			console.log('!multikeyword', currentKeyword, $( '#yoast_wpseo_focuskw' ));
 		}
-
 		jQuery( window ).trigger( 'YoastSEO:numericScore', score );
 	};
 
@@ -288,6 +288,7 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 	 * @param {number} score
 	 */
 	PostScraper.prototype.saveContentScore = function( score ) {
+
 		tabManager.updateContentTab( score );
 		var indicator = getIndicatorForScore( score );
 		publishBox.updateScore( 'content', indicator.className );
