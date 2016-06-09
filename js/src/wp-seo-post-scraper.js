@@ -252,27 +252,31 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 	PostScraper.prototype.saveScores = function( score ) {
 		var indicator = getIndicatorForScore( score );
 
+		if ( currentKeyword === '' ) {
+			indicator.className = 'na';
+			indicator.screenReaderText = app.i18n.dgettext( 'js-text-analysis', 'Enter a focus keyword to calculate the SEO score' );
+		}
+
 		if ( tabManager.isMainKeyword( currentKeyword ) ) {
 			document.getElementById( 'yoast_wpseo_linkdex' ).value = score;
 
-			if ( '' === currentKeyword ) {
-				indicator.className = 'na';
-				indicator.screenReaderText = app.i18n.dgettext( 'js-text-analysis', 'Enter a focus keyword to calculate the SEO score' );
-			}
-
+			console.log(currentKeyword);
+			publishBox.updateScore( 'keyword', indicator.className );
 			updateTrafficLight( indicator );
 			updateAdminBar( indicator );
 
-			publishBox.updateScore( 'keyword', indicator.className );
+			tabManager.updateKeywordTab( score, currentKeyword );
 		}
 
 		// If multi keyword isn't available we need to update the first tab (content)
 		if ( ! YoastSEO.multiKeyword ) {
 			tabManager.updateKeywordTab( score, currentKeyword );
-			publishBox.updateScore( 'content', indicator.className );
-
+			publishBox.updateScore( 'keyword', indicator.className );
+			updateTrafficLight( indicator );
+			updateAdminBar( indicator );
 			// Updates the input with the currentKeyword value
 			$( '#yoast_wpseo_focuskw' ).val( currentKeyword );
+			console.log('!multikeyword', currentKeyword, $( '#yoast_wpseo_focuskw' ));
 		}
 
 		jQuery( window ).trigger( 'YoastSEO:numericScore', score );
@@ -449,6 +453,7 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 		snippetPreview = initSnippetPreview( postScraper );
 		args.snippetPreview = snippetPreview;
 
+		//Create and set new Yoast SEO app.
 		app = new App( args );
 		window.YoastSEO = {};
 		window.YoastSEO.app = app;
@@ -468,7 +473,6 @@ var updateAdminBar = require( './ui/adminBar' ).update;
 		var indicator = getIndicatorForScore( savedKeywordScore );
 		updateTrafficLight( indicator );
 		updateAdminBar( indicator );
-		publishBox.updateScore( 'keyword', indicator.className );
 
 		tabManager.getKeywordTab().activate();
 

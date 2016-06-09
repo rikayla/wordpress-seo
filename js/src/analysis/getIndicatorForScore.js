@@ -8,15 +8,21 @@ var isUndefined = require( 'lodash/isUndefined' );
  * @returns {Object} The indicator for the given score.
  */
 function getIndicatorForScore( score ) {
+
+	var indicator = {
+		className: 'na',
+		screenReaderText: '',
+		fullText: ''
+	};
+
+	if ( isUndefined( score ) ){
+		return indicator;
+	}
+
 	// Scale because scoreToRating works from 0 to 10.
 	score /= 10;
 
 	var app = YoastSEO.app;
-	var indicator = {
-		className: '',
-		screenReaderText: '',
-		fullText: ''
-	};
 
 	if ( ! isUndefined( app.contentAssessorPresenter ) ) {
 		indicator = app.contentAssessorPresenter.getIndicator( scoreToRating( score ) );

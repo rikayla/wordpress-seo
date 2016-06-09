@@ -27,7 +27,7 @@ var imageScoreClass = 'image yoast-logo svg';
 	 * Updates a score type in the publish box.
 	 *
 	 * @param {String} type The score type to update (content or seo).
-	 * @param {String} status The status is the class name that is used to update the image.
+	 * @param {String} status The status is the class name that is used define the status for the image.
 	 */
 	function updateScoreInPublishBox( type, status ) {
 		var publishSection = $( '#' + type + '-score' );

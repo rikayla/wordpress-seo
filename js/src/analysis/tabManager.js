@@ -31,7 +31,7 @@ function TabManager( arguments ) {
 /**
  * Initializes the two tabs.
  */
-TabManager.prototype.init = function() {
+TabManager.prototype.init = function () {
 	var metaboxTabs = $( '#wpseo-metabox-tabs' );
 
 	this.focusKeywordInput = $( '#yoast_wpseo_focuskw_text_input,#wpseo_focuskw' );
@@ -39,7 +39,7 @@ TabManager.prototype.init = function() {
 	this.contentAnalysis = $( '#yoast-seo-content-analysis' );
 	this.keywordAnalysis = $( '#wpseo-pageanalysis,#wpseo_analysis' );
 
-	var initialKeyword   = $( this.arguments.focusKeywordField ).val();
+	var initialKeyword = $( this.arguments.focusKeywordField ).val();
 
 	// We start on the content analysis 'tab'.
 	this.contentAnalysis.show();
@@ -54,14 +54,14 @@ TabManager.prototype.init = function() {
 			prefix: this.strings.keywordTab,
 			basedOn: this.strings.basedOn,
 			fallback: this.strings.enterFocusKeyword,
-			onActivate: function() {
+			onActivate: function () {
 				this.showKeywordAnalysis();
 				this.deactivateContentTab();
 
 				this.focusKeywordInput.val( this.mainKeywordTab.getKeyword() );
 
 			}.bind( this ),
-			afterActivate: function() {
+			afterActivate: function () {
 				YoastSEO.app.refresh();
 			}
 		}
@@ -75,14 +75,14 @@ TabManager.prototype.init = function() {
 		basedOn: '',
 		showKeyword: false,
 		isKeywordTab: false,
-		onActivate: function() {
+		onActivate: function () {
 			this.showContentAnalysis();
 
 			this.focusKeywordInput.val( '' );
 
 			this.mainKeywordTab.active = false;
 		}.bind( this ),
-		afterActivate: function() {
+		afterActivate: function () {
 			YoastSEO.app.refresh();
 		}
 	} );
@@ -94,7 +94,7 @@ TabManager.prototype.init = function() {
 	this.focusKeywordInput.val( '' );
 
 	// Prevent us from saving an empty focus keyword when we are on the content tab.
-	$( '#edittag' ).on( 'submit', function() {
+	$( '#edittag' ).on( 'submit', function () {
 		this.focusKeywordInput.val( this.mainKeywordTab.getKeyword() );
 	}.bind( this ) );
 };
@@ -102,7 +102,7 @@ TabManager.prototype.init = function() {
 /**
  * Shows the keyword analysis elements.
  */
-TabManager.prototype.showKeywordAnalysis = function() {
+TabManager.prototype.showKeywordAnalysis = function () {
 	this.focusKeywordRow.show();
 	this.keywordAnalysis.show();
 	this.contentAnalysis.hide();
@@ -111,7 +111,7 @@ TabManager.prototype.showKeywordAnalysis = function() {
 /**
  * Shows the content analysis elements.
  */
-TabManager.prototype.showContentAnalysis = function() {
+TabManager.prototype.showContentAnalysis = function () {
 	this.focusKeywordRow.hide();
 	this.keywordAnalysis.hide();
 	this.contentAnalysis.show();
@@ -147,13 +147,14 @@ TabManager.prototype.updateKeywordTab = function( score, keyword ) {
 		screenReaderText: YoastSEO.app.i18n.dgettext( 'js-text-analysis', 'Enter a focus keyword to calculate the SEO score' )
 	};
 
+	if ( keyword === '' ) {
+		this.mainKeywordTab.update( indicator.className, indicator.screenReaderText, keyword );
+		return;
+	}
+
 	if ( this.mainKeywordTab.active ) {
-		if ( keyword === '' ) {
-			this.mainKeywordTab.update( indicator.className, indicator.screenReaderText );
-		} else {
-			indicator = getIndicatorForScore( score );
-			this.mainKeywordTab.update( indicator.className, indicator.screenReaderText, keyword );
-		}
+		indicator = getIndicatorForScore( score );
+		this.mainKeywordTab.update( indicator.className, indicator.screenReaderText, keyword );
 
 		return;
 	}
@@ -171,7 +172,7 @@ TabManager.prototype.updateKeywordTab = function( score, keyword ) {
  *
  * @returns {boolean}
  */
-TabManager.prototype.isMainKeyword = function( keyword ) {
+TabManager.prototype.isMainKeyword = function ( keyword ) {
 	return this.mainKeywordTab.getKeyword() === keyword;
 };
 
@@ -180,7 +181,7 @@ TabManager.prototype.isMainKeyword = function( keyword ) {
  *
  * @returns {KeywordTab} The keyword tab object.
  */
-TabManager.prototype.getKeywordTab = function() {
+TabManager.prototype.getKeywordTab = function () {
 	return this.mainKeywordTab;
 };
 
@@ -189,7 +190,7 @@ TabManager.prototype.getKeywordTab = function() {
  *
  * @returns {KeywordTab} The content tab object.
  */
-TabManager.prototype.getContentTab = function() {
+TabManager.prototype.getContentTab = function () {
 	return this.contentTab;
 };
 
